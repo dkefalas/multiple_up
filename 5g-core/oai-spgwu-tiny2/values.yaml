@@ -48,7 +48,7 @@ multus:
     hostInterface: "ens3"
   n3Interface:
     create: false
-    Ipadd: "172.21.12.95"
+    Ipadd: "172.21.12.98"
     Netmask: "22"
     # #name inside the pod is hardcoded right now
     # name: "n3"
@@ -125,7 +125,7 @@ resources:
   define: false
   limits:
     nf:
-      cpu: 100m
+      cpu: 1000m
       memory: 128Mi
     #If tcpdump container is disabled this value will not be used
     tcpdump:
@@ -133,7 +133,7 @@ resources:
       memory: 128Mi
   requests:
     nf:
-      cpu: 100m
+      cpu: 1000m
       memory: 128Mi
     #If tcpdump container is disabled this value will not be used
     tcpdump:

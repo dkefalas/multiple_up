@@ -38,7 +38,7 @@ multus:
     # if gatway is empty then it will be removed
     #Gateway: "172.21.7.254"
     #routes: [{'dst': '10.8.0.0/24','gw': '172.21.7.254'}, {'dst': '10.9.0.0/24','gw': '172.21.7.254'}]
-    hostInterface: "enp1s0"      # Interface of the host machine on which this pod will be scheduled
+    hostInterface: "ens3"      # Interface of the host machine on which this pod will be scheduled
   ruInterface:            #Only needed if using a ethernet based RU/USRP
     create: false
     IPadd: "192.168.80.90"
@@ -49,7 +49,7 @@ multus:
     #Gateway: "192.168.80.1"  #In case you don't have a gateway remove it from here
     ## The value must be [0, master's MTU]. If commented it will masters MTU
     #mtu: 9000
-    hostInterface: "bond0"      # Interface of the host machine on which this pod will be scheduled
+    hostInterface: "enp1s0"      # Interface of the host machine on which this pod will be scheduled
 
 ## If you want to change more configuration parameters then you should mount the config file  
 # in templates/configmap.yaml
@@ -64,8 +64,8 @@ config:
   tac: "1"     # check the information with AMF
   sst: "1"  #currently only 4 standard values are allowed 1,2,3,4
   usrp: rfsim   #allowed values rfsim, b2xx, n3xx or x3xx
-  f1IfName: "eth0"   #if multus.f1Interface.create is true then use f1
-  cuHost: "oai-cu" ## Ip-address or hostname
+  f1IfName: "f1"   #if multus.f1Interface.create is true then use f1
+  cuHost: "172.21.16.92" ## Ip-address or hostname
   f1cuPort: "2153"   #2153 if using same interface for f1 and n3 else standard port 2152 should be use if f1 and n3 interface are different
   f1duPort: "2153"   #2153 if using same interface for f1 and n3 else standard port 2152 should be use if f1 and n3 interface are different
 
@@ -92,10 +92,10 @@ tcpdumpimage:
 ## https://kubernetes.io/docs/concepts/configuration/manage-resources-containers
 ## https://kubernetes.io/docs/concepts/workloads/pods/pod-qos
 resources:
-  define: false
+  define: true
   limits:
     nf:
-      cpu: 1000m
+      cpu: 4000m
       memory: 2Gi
     #If tcpdump container is disabled this value will not be used
     tcpdump:
@@ -103,7 +103,7 @@ resources:
       memory: 128Mi
   requests:
     nf:
-      cpu: 1000m
+      cpu: 4000m
       memory: 2Gi
     #If tcpdump container is disabled this value will not be used
     tcpdump:
@@ -118,4 +118,4 @@ terminationGracePeriodSeconds: 5
 
 nodeSelector: {}
 
-nodeName: vm10
+nodeName: vm8

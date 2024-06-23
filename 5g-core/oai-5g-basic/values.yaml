@@ -7,6 +7,8 @@ mysql:
     - name: "regcred"
   persistence:
     enabled: false
+  nodeSelector:
+    kubernetes.io/hostname: vm8
 oai-nrf:
   enabled: true
   weight: 0
@@ -120,7 +122,7 @@ oai-amf:
   nodeSelector:
     kubernetes.io/hostname: vm8
 oai-spgwu-tiny2:
-  enabled: true
+  enabled: false
   weight: 5
   kubernetesType: Vanilla #Openshift/Vanilla Vanilla for Upstream Kubernetes
   nfimage:  # image name either locally present or in a public/private repository
@@ -128,7 +130,7 @@ oai-spgwu-tiny2:
     version: v1.5.1                                    ## The branch to be used to pull from dockerhub
     # pullPolicy: IfNotPresent or Never or Always
     pullPolicy: IfNotPresent
-  includeTcpDumpContainer: true #only for taking pcaps inside network function pod
+  includeTcpDumpContainer: false #only for taking pcaps inside network function pod
   imagePullSecrets:
     - name: "regcred"
   # create an extra interface for N3 incase the gNB is outside the cluster network or there is a need to have dedicated interface for N3
@@ -149,8 +151,8 @@ oai-spgwu-tiny2:
       routes: ""
       hostInterface: "enp1s0"
     n3Interface:
-      create: no
-      Ipadd: "172.21.8.95"
+      create: true
+      Ipadd: "172.21.8.96"
       Netmask: "22"
       # #name inside the pod is hardcoded right now
       # name: "n3"
@@ -173,13 +175,13 @@ oai-spgwu-tiny2:
       hostInterface: "bond0"
       #NOTE: If the interface you selected for n6If is wrong then traffic will not be routed towards internet
   config:
-    n3If: "eth0"  # n3 if multus.n3Interface.create is true
+    n3If: "n3"  # n3 if multus.n3Interface.create is true
     n4If: "eth0" # n4 if multus.n4Interface.create is true
     n6If: "n6"  # n6 multus.n6Interface.create is true
     logLevel: "info"   #allowed info/error/debug
     threadsN3Ul: "1"
     threadsN6Dl: "1"
-    threadsN6Prio: 99
+    threadsN6Prio: 80
     threadsN3Prio: 98
     threadsN4Prio: 88
     netUeIp: "12.1.1.0/24"  # The range in which UE ip-address will be allocated should be configured the same in SMF
@@ -191,7 +193,7 @@ oai-spgwu-tiny2:
     dnn2: "mitsos" # should match with SMF information
     #Upto 4 slices can be added from here to add more you need to add manullay in config.yaml. Please follow the same way of adding slices nssaiSST$,nssaiSd$,dnn$ ($=0,1,2,3)
   nodeSelector:
-    kubernetes.io/hostname: vm15
+    kubernetes.io/hostname: vm13
 
 oai-spgwu-tiny:
   enabled: true
@@ -202,7 +204,7 @@ oai-spgwu-tiny:
     version: v1.5.1                                    ## The branch to be used to pull from dockerhub
     # pullPolicy: IfNotPresent or Never or Always
     pullPolicy: IfNotPresent
-  includeTcpDumpContainer: true #only for taking pcaps inside network function pod
+  includeTcpDumpContainer: false #only for taking pcaps inside network function pod
   imagePullSecrets:
     - name: "regcred"
   # create an extra interface for N3 incase the gNB is outside the cluster network or there is a need to have dedicated interface for N3
@@ -223,7 +225,7 @@ oai-spgwu-tiny:
       routes: ""
       hostInterface: "enp1s0"
     n3Interface:
-      create: no
+      create: true
       Ipadd: "172.21.8.95"
       Netmask: "22"
       # #name inside the pod is hardcoded right now
@@ -247,13 +249,13 @@ oai-spgwu-tiny:
       hostInterface: "bond0"
       #NOTE: If the interface you selected for n6If is wrong then traffic will not be routed towards internet
   config:
-    n3If: "eth0"  # n3 if multus.n3Interface.create is true
+    n3If: "n3"  # n3 if multus.n3Interface.create is true
     n4If: "eth0" # n4 if multus.n4Interface.create is true
     n6If: "n6"  # n6 multus.n6Interface.create is true
     logLevel: "info"   #allowed info/error/debug
     threadsN3Ul: "1"
     threadsN6Dl: "1"
-    threadsN6Prio: 99
+    threadsN6Prio: 80
     threadsN3Prio: 98
     threadsN4Prio: 88
     netUeIp: "12.1.1.0/24"  # The range in which UE ip-address will be allocated should be configured the same in SMF
@@ -268,7 +270,7 @@ oai-spgwu-tiny:
     nssaiSd1: "0xFFFFFF"  # should match with SMF information (Optional, if removed sd value will be 0xFFFFFF only if nssaiSst1 is configured)
     dnn1: "ims" # should match with SMF information
   nodeSelector:
-    kubernetes.io/hostname: vm15
+    kubernetes.io/hostname: vm14
 oai-traffic-server:
   enabled: false
   weight: 6
