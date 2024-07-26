@@ -26,5 +26,11 @@ dependencies:
 - name: oai-spgwu-tiny2
   repository: file://../oai-spgwu-tiny2
   version: v1.5.1
-digest: sha256:bedd2456af2931edb8b840ccc795f9c077594342f5528e9949a3600b0a34e873
-generated: "2024-02-15T11:00:28.692952709Z"
+- name: oai-spgwu-tiny3
+  repository: file://../oai-spgwu-tiny3
+  version: v1.5.1
+- name: oai-traffic-server
+  repository: file://../oai-traffic-server
+  version: v1
+digest: sha256:4dcc8607279afa08e69462b67e434715ea37911ae5c140e1bf2df4f8dee4b611
+generated: "2024-07-03T16:12:28.610252445Z"

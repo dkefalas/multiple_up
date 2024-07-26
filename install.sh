@@ -18,7 +18,8 @@ if [ "$1" = "install" ]; then
     helm install up ./5g-ran/oai-cu-up
     #helm install up2 ./5g-ran/oai-cu-up2
     pod_name=$(kubectl get pods | grep "oai-cu-up" | awk '{print $1}')
-
+    kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
+    sleep 20
     #while ! kubectl logs -f $pod_name >&1 | grep -q "\[GTPU\]   SA mode"; do
     #	sleep 1
     #done
@@ -28,8 +29,8 @@ if [ "$1" = "install" ]; then
     #sleep 20
     #helm install du ./5g-ran/oai-du
     helm install du2 ./5g-ran/oai-du2
-    #helm install du3 ./5g-ran/oai-du3
-    #helm install du4 ./5g-ran/oai-du4
+    helm install du3 ./5g-ran/oai-du3
+    helm install du4 ./5g-ran/oai-du4
     #helm install du5 /home/user8/multiple_up/charts/oai-5g-ran/oai-du5
 
     #sleep 20
@@ -37,11 +38,15 @@ if [ "$1" = "install" ]; then
     #kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
     
     pod_name=$(kubectl get pods | grep "tiny-" | awk '{print $1}')
-    kubectl exec -ti $pod_name apt-get update 
-    kubectl exec -ti $pod_name apt-get install iperf
+    kubectl exec -ti $pod_name -- apt-get update 
+    kubectl exec -ti $pod_name -- apt-get install -y iperf3
     pod_name=$(kubectl get pods | grep "tiny2-" | awk '{print $1}')
-    kubectl exec -ti $pod_name apt-get update 
-    kubectl exec -ti $pod_name apt-get install iperf
+    kubectl exec -ti $pod_name -- apt-get update 
+    kubectl exec -ti $pod_name -- apt-get install -y iperf3
+    pod_name=$(kubectl get pods | grep "tiny3-" | awk '{print $1}')
+    kubectl exec -ti $pod_name -- apt-get update 
+    kubectl exec -ti $pod_name -- apt-get install -y iperf3
+
 
     #sleep 40
 
@@ -53,16 +58,33 @@ if [ "$1" = "install" ]; then
     helm install ue2 ./5g-ran/oai-nr-ue2
     pod_name=$(kubectl get pods | grep "ue2" | awk '{print $1}')
     kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
-    kubectl exec -ti $pod_name ping 12.1.1.1
+    kubectl exec -ti $pod_name -- apt-get update 
+    kubectl exec -ti $pod_name -- apt-get install -y iperf3
 
-    #helm install ue3 ./5g-ran/oai-nr-ue3
-    pod_name=$(kubectl get pods | grep "ue3" | awk '{print $1}')
-    #kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
+
+
+
     #kubectl exec -ti $pod_name ping 12.1.1.1
 
-    #helm install ue4 ./5g-ran/oai-nr-ue4
-    #pod_name=$(kubectl get pods | grep "ue4" | awk '{print $1}')
-    #kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
+    helm install ue3 ./5g-ran/oai-nr-ue3
+    pod_name=$(kubectl get pods | grep "ue3" | awk '{print $1}')
+    kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
+    kubectl exec -ti $pod_name -- apt-get update 
+    
+    kubectl exec -ti $pod_name -- apt-get install -y iperf3
+
+
+    #kubectl exec -ti $pod_name ping 12.1.1.1
+
+    helm install ue4 ./5g-ran/oai-nr-ue4
+    pod_name=$(kubectl get pods | grep "ue4" | awk '{print $1}')
+    kubectl exec -ti $pod_name -- apt-get update 
+    kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
+    kubectl exec -ti $pod_name -- apt-get update 
+    kubectl exec -ti $pod_name -- apt-get install -y iperf3
+
+   
+    python3 python_server.py
     #kubectl exec -ti $pod_name ping 12.1.1.1
     
     #helm install ue5 /home/user8/multiple_up/charts/oai-5g-ran/oai-nr-ue5
@@ -84,4 +106,3 @@ else
     helm uninstall $(helm list -aq)
 
 fi
-

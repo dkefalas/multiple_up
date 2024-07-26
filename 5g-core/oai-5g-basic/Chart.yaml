@@ -59,8 +59,18 @@ dependencies:
   name: oai-spgwu-tiny2
   repository: "file://../oai-spgwu-tiny2"
   version: v1.5.1
-  #- condition: oai-traffic-server.enabled
-  #name: oai-traffic-server
-  #repository: "file://../oai-traffic-server"
-  #version: v1
+- condition: oai-spgwu-tiny3.enabled
+  name: oai-spgwu-tiny3
+  repository: "file://../oai-spgwu-tiny3"
+  version: v1.5.1
+
+- condition: oai-traffic-server.enabled
+  name: oai-traffic-server
+  repository: "file://../oai-traffic-server"
+  version: v1
+
+ #- condition: oai-traffic-server2.enabled
+ #name: oai-traffic-server2
+ #repository: "file://../oai-traffic-server2"
+ #version: v1
 

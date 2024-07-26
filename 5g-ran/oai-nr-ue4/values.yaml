@@ -36,7 +36,7 @@ config:
   fullImsi: "001010000000103"       # make sure all the below entries are present in the subscriber database
   fullKey: "fec86ba6eb707ed08905757b1bb44b8f" 
   opc: "C42449363BBAD02B66D16BC975D77CC1"
-  dnn: "mitsos"
+  dnn: "dim"
   sst: "1"                     # configure according to gnb and amf, smf and upf 
   sd: "16777215"
   usrp: "rfsim"            # allowed rfsim, b2xx, n3xx, x3xx
@@ -86,4 +86,4 @@ terminationGracePeriodSeconds: 0
 
 nodeSelector: {}
 
-nodeName: vm6
+nodeName: dkefalas-ms-7b54

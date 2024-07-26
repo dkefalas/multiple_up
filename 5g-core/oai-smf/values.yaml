@@ -81,13 +81,22 @@ config:
   sessionAmbrDl0: "1000Mbps"
   # Extra optional slice
   dnnNi1: "mitsos"
-  pdusessiontype1: "IPv4v6"
+  pdusessiontype1: "IPv4"
   ipv4dnnRange1: "12.2.1.41 - 12.2.1.254"
-  nssaiSst1: 2
+  nssaiSst1: 1
   nssaiSd1: "0xFFFFFF"
   qosProfile5qi1: 1
   sessionAmbrUl1: "1000Mbps"
   sessionAmbrDl1: "1000Mbps"
+  dnnNi2: "mitsos"
+  pdusessiontype2: "IPv4"
+  ipv4dnnRange2: "12.2.1.41 - 12.2.1.254"
+  nssaiSst2: 1
+  nssaiSd2: "0xFFFFFF"
+  qosProfile5qi2: 1
+  sessionAmbrUl2: "1000Mbps"
+  sessionAmbrDl2: "1000Mbps"
+
 
 
 ## Debugging section
