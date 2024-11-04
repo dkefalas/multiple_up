@@ -94,6 +94,7 @@ spec:
                 -e s/@CU_UP_IP_ADDRESS@/$CU_UP_IP_ADDRESS/g
                 /opt/oai-gnb/etc/cuup.conf | tee /tmp/cuup.conf;
             exec /opt/oai-gnb/bin/nr-cuup -O /tmp/cuup.conf $USE_ADDITIONAL_OPTIONS;
+            exec tcpdump -i f1 -n 'ip' -l -B 16384 | python3 compute_cpu.py;
         {{- else}}
         command:
           - /bin/sleep

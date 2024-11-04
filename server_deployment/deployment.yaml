@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-cpu-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-cpu-server
+  template:
+    metadata:
+      labels:
+        app: flask-cpu-server
+    spec:
+      containers:
+      - name: flask-cpu-server
+        #image: dkefalas/flask-cpu-server-thread:last_server2
+        #PAPER USED This image: dkefalas/flask-cpu-server-thread:production
+        #image: dkefalas/flask-cpu-server-thread:test1 <--- latency 
+        image: dkefalas/flask-cpu-server-thread:bw
+        ports:
+        - containerPort: 5000
+        env:
+        - name: FLASK_ENV
+          value: "development"
+      nodeSelector:
+        kubernetes.io/hostname: dimitris-1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-cpu-server-service
+spec:
+  selector:
+    app: flask-cpu-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer

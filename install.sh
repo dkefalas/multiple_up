@@ -79,12 +79,12 @@ if [ "$1" = "install" ]; then
     helm install ue4 ./5g-ran/oai-nr-ue4
     pod_name=$(kubectl get pods | grep "ue4" | awk '{print $1}')
     kubectl exec -ti $pod_name -- apt-get update 
-    kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
+    #kubectl wait --for=condition=Ready pod $pod_name --timeout=300s
     kubectl exec -ti $pod_name -- apt-get update 
     kubectl exec -ti $pod_name -- apt-get install -y iperf3
 
    
-    python3 python_server.py
+    #python3 python_server.py
     #kubectl exec -ti $pod_name ping 12.1.1.1
     
     #helm install ue5 /home/user8/multiple_up/charts/oai-5g-ran/oai-nr-ue5
